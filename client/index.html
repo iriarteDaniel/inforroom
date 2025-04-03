@@ -11,17 +11,22 @@
 
         const form = document.getElementById('form');
         const input = document.getElementById('input');
+        const name = document.getElementById('name');
         const messages = document.getElementById('messages');
+        const users = document.getElementById('users');
 
-        socket.on('chat message', (msg) => {
-            const item = `<li>${msg}</li>`;
+        socket.on('chat message', (msg, name) => {
+            const item = `<li>${name}: ${msg}</li>`;
             messages.insertAdjacentHTML('beforeend', item);
         });
-
+        socket.on('user count', (count) => {
+            const item = `Users: ${count}`;
+            users.innerHTML = item;
+        });
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (input.value) {
-                socket.emit('chat message', input.value);
+                socket.emit('chat message', input.value, name.value);
                 input.value = '';
             }
         });
@@ -36,7 +41,8 @@
             <button type="submit">Enviar</button>
         </form>
     </section>
-
+    <input type="text" name= "name" id="name" placeholder="Choose a name..." autocomplete="off">
+    <p id="users">Users: </p>
     <style>
         *,
         *::before,
@@ -106,7 +112,17 @@
         #input:focus {
           outline: 0;
         }
+        #name {
+          border-radius: 9999px;
+          border: 1px solid #eee;
+          flex: 1;
+          margin: 4px;
+          padding: 0 8px;
+        }
     
+        #name:focus {
+          outline: 0;
+        }
         #form>button {
           background: #09f;
           color: #fff;
