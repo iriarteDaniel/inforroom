@@ -1,6 +1,6 @@
 {
     "name": "inforroomworker",
-    "main": "src/index.js",
+    "main": "server/index.js",
     "compatibility_date": "2022-07-12",
     "workers_dev": false,
     "route": {
