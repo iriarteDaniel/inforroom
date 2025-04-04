@@ -24,8 +24,9 @@ io.on('connection', (socket) => {
     });
     socket.on('chat message', (message, name) => {
         io.emit('chat message', message, name);
+        console.log(name + ' ' + message);
         io.emit('user count', users);
-    //    console.log(users);
+        console.log(users);
     });  
 });
 
